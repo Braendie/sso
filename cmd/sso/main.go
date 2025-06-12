@@ -15,7 +15,7 @@ const (
 	envDev   = "dev"
 	envProd  = "prod"
 )
-// TODO: jwt.go, server.go
+
 func main() {
 
 	cfg := config.MustLoad()
@@ -57,8 +57,8 @@ func setupLogger(env string) *slog.Logger {
 			slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}),
 		)
 	case envProd:
-		log = slog.New(slog.NewJSONHandler(
-			os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}),
+		log = slog.New(
+			slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}),
 		)
 	}
 

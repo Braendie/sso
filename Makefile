@@ -15,10 +15,10 @@ run:
 	go run $(PATH_TO_MAIN) -config $(PATH_TO_CONFIG)
 
 migrator:
-	go run $(PATH_TO_MIGRATOR) --storage-path=$(PATH_TO_STORAGE) --migrations-path=$(PATH_TO_MIGRATIONS)
+	go run $(PATH_TO_MIGRATOR) --config=$(PATH_TO_CONFIG)
 
 migrator_test:
-	go run $(PATH_TO_MIGRATOR) --storage-path=./storage/sso.db --migrations-path=$(PATH_TO_MIGRATIONS_TEST) --migrations-table=migrations_test
+	go run $(PATH_TO_MIGRATOR) --config=$(PATH_TO_CONFIG) --migrations-table=migrations_test
 
 test:
 	go test ./...

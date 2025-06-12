@@ -9,10 +9,12 @@ import (
 )
 
 type Config struct {
-	Env         string        `yaml:"env" env-required:"true"`
-	StoragePath string        `yaml:"storage_path" env-required:"true"`
-	TokenTTL    time.Duration `yaml:"token_ttl" env-required:"true"`
-	GRPC        GRPCConfig    `yaml:"grpc"`
+	Env                string        `yaml:"env" env-required:"true"`
+	StoragePath        string        `yaml:"storage_path" env-required:"true"`
+	MigrationsPath     string        `yaml:"migrations_path" env-required:"true"`
+	MigrationsTestPath string        `yaml:"migrations_test_path" env-default:"./tests/migrations"`
+	TokenTTL           time.Duration `yaml:"token_ttl" env-required:"true"`
+	GRPC               GRPCConfig    `yaml:"grpc"`
 }
 
 type GRPCConfig struct {

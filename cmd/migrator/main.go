@@ -5,33 +5,29 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/Braendie/sso/internal/config"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-// TODO: Перенести все это в конфиг
 func main() {
-	var storagePath, migrationsPath, migrationsTable string
-
-	flag.StringVar(&storagePath, "storage-path", "", "path to storage")
-	flag.StringVar(&migrationsPath, "migrations-path", "", "path to migrations")
+	var migrationsTable string
 	flag.StringVar(&migrationsTable, "migrations-table", "migrations", "name of migrations")
-	flag.Parse()
 
-	if storagePath == "" {
-		panic("storage-path is required")
-	}
+	cfg := config.MustLoad()
 
-	if migrationsPath == "" {
-		panic("migrations-path is required")
+	var migrationsPath string
+	if migrationsTable == "migrations_test" {
+		migrationsPath = cfg.MigrationsTestPath
+	} else {
+		migrationsPath = cfg.MigrationsPath
 	}
 
 	m, err := migrate.New(
 		"file://"+migrationsPath,
-		fmt.Sprintf("sqlite3://%s?x-migrations-table=%s", storagePath, migrationsTable),
+		fmt.Sprintf("sqlite3://%s?x-migrations-table=%s", cfg.StoragePath, migrationsTable),
 	)
-
 	if err != nil {
 		panic(err)
 	}

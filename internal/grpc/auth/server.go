@@ -6,6 +6,7 @@ import (
 
 	ssov1 "github.com/Braendie/protos/gen/go/sso"
 	"github.com/Braendie/sso/internal/services/auth"
+	"github.com/go-playground/validator/v10"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -43,10 +44,10 @@ func (s *serverAPI) Login(
 	ctx context.Context,
 	req *ssov1.LoginRequest,
 ) (*ssov1.LoginResponse, error) {
-	// TODO: Провалидировать данные по хорошему
 	if err := validateLogin(req); err != nil {
 		return nil, err
 	}
+
 	token, err := s.auth.Login(ctx, req.Email, req.GetPassword(), int(req.GetAppId()))
 	if err != nil {
 		if errors.Is(err, auth.ErrInvalidCredentials) {
@@ -55,7 +56,7 @@ func (s *serverAPI) Login(
 
 		return nil, status.Error(codes.Internal, "internal error")
 	}
-
+	validator.New()
 	return &ssov1.LoginResponse{
 		Token: token,
 	}, nil
@@ -65,7 +66,6 @@ func (s *serverAPI) Register(
 	ctx context.Context,
 	req *ssov1.RegisterRequest,
 ) (*ssov1.RegisterResponse, error) {
-	// TODO: Провалидировать данные по хорошему
 	if err := validateRegister(req); err != nil {
 		return nil, err
 	}
@@ -87,7 +87,6 @@ func (s *serverAPI) IsAdmin(
 	ctx context.Context,
 	req *ssov1.IsAdminRequest,
 ) (*ssov1.IsAdminResponse, error) {
-	// TODO: Провалидировать данные по хорошему
 	if err := validateIsAdmin(req); err != nil {
 		return nil, err
 	}

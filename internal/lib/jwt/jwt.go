@@ -6,7 +6,7 @@ import (
 	"github.com/Braendie/sso/internal/domain/models"
 	"github.com/golang-jwt/jwt/v5"
 )
-// TODO: сделать тесты
+
 func NewToken(user models.User, app models.App, duration time.Duration) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 
