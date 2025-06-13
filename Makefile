@@ -3,8 +3,6 @@ PATH_TO_MAIN=./cmd/sso/main.go
 PATH_TO_CONFIG=./config/local.yaml
 PATH_TO_MIGRATOR=./cmd/migrator/main.go
 PATH_TO_STORAGE=./storage/sso.db
-PATH_TO_MIGRATIONS=./migrations
-PATH_TO_MIGRATIONS_TEST=./tests/migrations
 
 .PHONY: build run migrator migrator_test test clean
 
