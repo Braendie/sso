@@ -6,7 +6,6 @@ import (
 
 	ssov1 "github.com/Braendie/protos/gen/go/sso"
 	"github.com/Braendie/sso/internal/services/auth"
-	"github.com/go-playground/validator/v10"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -56,7 +55,6 @@ func (s *serverAPI) Login(
 
 		return nil, status.Error(codes.Internal, "internal error")
 	}
-	validator.New()
 	return &ssov1.LoginResponse{
 		Token: token,
 	}, nil
